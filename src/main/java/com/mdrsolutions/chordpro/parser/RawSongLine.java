@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.mdrsolutions.chordpro.parser;
+ package com.mdrsolutions.chordpro.parser;
 
 import java.util.List;
 
@@ -13,25 +8,31 @@ import java.util.List;
  */
 public class RawSongLine {
 
-    public RawSongLine(String song, List<ChordLocation> chordLocations) {
+    public RawSongLine(String song, List<ChordLocation> chordLocations, List<DirectiveLocation> directiveLocations) {
         this.line = song;
         this.chordLocations = chordLocations;
+        this.directiveLocations = directiveLocations;
     }
     
     private final String line;
     private final List<ChordLocation> chordLocations;
+    private final List<DirectiveLocation> directiveLocations;
 
     public String getSong() {
         return line;
-    }
+    } 
 
-    public List<ChordLocation> getChordLocation() {
+    public List<ChordLocation> getChordLocations() {
         return chordLocations;
     }
 
+    public List<DirectiveLocation> getDirectiveLocations() {
+        return directiveLocations;
+    }  
+
     @Override
     public String toString() {
-        return "SongLine{" + "song=" + line + ", chordLocations=" + chordLocations + '}';
+        return "RawSongLine{" + "line=" + line + ", chordLocations=" + chordLocations + ", directiveLocations=" + directiveLocations + '}';
     }
     
     

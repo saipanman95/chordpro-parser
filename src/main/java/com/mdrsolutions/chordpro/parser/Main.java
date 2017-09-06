@@ -5,6 +5,7 @@
  */
 package com.mdrsolutions.chordpro.parser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,9 +22,10 @@ public class Main {
     private static final String SINGLE_SPACE = " ";
     private static final String OPEN_SQUARE_BRACKET = "[";
     private static final String CLOSE_SQUARE_BRACKET = "]";
-    private static final String CHORD_PRO_REGEX_PATTERN = "\\[(.*?)\\]";
+    private static final String CHORD_PRO_CHORD_REGEX_PATTERN = "\\[(.*?)\\]";
+    private static final String CHORD_PRO_DIRECTIVE_REGEX_PATTERN = "\\{(.*?)\\}";
     private static final String SONG
-            = "Bless the[C] Lord, O my[G] soul,[D/F#] O my [Em] soul,\n"
+            = "{c: Verse 1: }Bless the[C] Lord, O my[G] soul,[D/F#] O my [Em] soul,\n"
             + "[C]Worship His ho[G]ly n[Dsus4]ame.    [D]\n"
             + "Sing like [C]never be[Em]fore, [C]   [D]O m[Em]y soul.\n"
             + "I'll[C] worship Your ho[D]ly na[C/G]me.   [G]";
@@ -36,12 +38,12 @@ public class Main {
         
         //identify song line chord components
         songLines(SONG).forEach((songLine) -> {
-            songLines.add(chordDetail(songLine));
+            songLines.add(parseChordsDirectives(songLine));
         });
 
         //transform Song lines
         songLines.forEach((line) -> {
-            arrangedSongLines.add(transformSongLines(line));
+            arrangedSongLines.add(transformChordSongLines(line));
         });
         
         //print Arranged Chords and Song Lines
@@ -59,8 +61,8 @@ public class Main {
         return songLines;
     }
 
-    private static RawSongLine chordDetail(String songLine) {
-        Pattern pattern = Pattern.compile(CHORD_PRO_REGEX_PATTERN);
+    private static List<ChordLocation> chordDetail(String songLine) {
+        Pattern pattern = Pattern.compile(CHORD_PRO_CHORD_REGEX_PATTERN);
         Matcher matcher = pattern.matcher(songLine);
 
         List<ChordLocation> chords = new LinkedList<>();
@@ -73,13 +75,37 @@ public class Main {
             
             //adding one so it keeps looking forward on next indexOf method
             chordLocation++;
+        } 
+        return chords;
+    }
+    
+    private static RawSongLine parseChordsDirectives(String songLine){
+        List<ChordLocation> chordDetail = chordDetail(songLine);
+        List<DirectiveLocation> directiveDetail = directiveDetail(songLine);
+        return new RawSongLine(songLine, chordDetail, directiveDetail);
+    }
+    
+    private static List<DirectiveLocation> directiveDetail(String songLine) {
+        Pattern pattern = Pattern.compile(CHORD_PRO_DIRECTIVE_REGEX_PATTERN);
+        Matcher matcher = pattern.matcher(songLine);
+
+        List<DirectiveLocation> directives = new LinkedList<>();
+
+        int directiveLocation = 0;
+        while (matcher.find()) {
+            String rawDirective = matcher.group(0);
+            directiveLocation = songLine.indexOf(rawDirective, directiveLocation);
+            directives.add(new DirectiveLocation(rawDirective, directiveLocation));
+            
+            //adding one so it keeps looking forward on next indexOf method
+            directiveLocation++;
         }
 
-        return new RawSongLine(songLine, chords);
+        return  directives;
     }
 
-    private static ArrangedSongLine transformSongLines(RawSongLine rawSongLine) {
-        List<ChordLocation> chordLocations = rawSongLine.getChordLocation();
+    private static ArrangedSongLine transformChordSongLines(RawSongLine rawSongLine) {
+        List<ChordLocation> chordLocations = rawSongLine.getChordLocations();
         String songLine = rawSongLine.getSong(); 
         
         StringBuilder chordLocBldr = new StringBuilder();
@@ -99,7 +125,7 @@ public class Main {
             previousColumnIndex = columnIndex + bracketChordLength +1;
         }
         
-        songLine = songLine.replaceAll(CHORD_PRO_REGEX_PATTERN, "");
+        songLine = songLine.replaceAll(CHORD_PRO_CHORD_REGEX_PATTERN, "");
         System.out.println(chordLocBldr.toString());
         System.out.println(songLine);
         
