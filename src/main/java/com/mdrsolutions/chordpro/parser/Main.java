@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mdrsolutions.chordpro.parser;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,12 +32,12 @@ public class Main {
         
         //identify song line chord components
         songLines(SONG).forEach((songLine) -> {
-            songLines.add(parseChordsDirectives(songLine));
+            songLines.add(parseSongLine(songLine));
         });
 
         //transform Song lines
         songLines.forEach((line) -> {
-            arrangedSongLines.add(transformChordSongLines(line));
+            arrangedSongLines.add(transformSongLine(line));
         });
         
         //print Arranged Chords and Song Lines
@@ -60,8 +54,14 @@ public class Main {
         songLines.addAll(Arrays.asList(split));
         return songLines;
     }
+    
+    private static RawSongLine parseSongLine(String songLine){
+        List<ChordLocation> chordDetail = produceChordDetails(songLine);
+        List<DirectiveLocation> directiveDetail = produceDirectiveDetails(songLine);
+        return new RawSongLine(songLine, chordDetail, directiveDetail);
+    }
 
-    private static List<ChordLocation> chordDetail(String songLine) {
+    private static List<ChordLocation> produceChordDetails(String songLine) {
         Pattern pattern = Pattern.compile(CHORD_PRO_CHORD_REGEX_PATTERN);
         Matcher matcher = pattern.matcher(songLine);
 
@@ -79,13 +79,7 @@ public class Main {
         return chords;
     }
     
-    private static RawSongLine parseChordsDirectives(String songLine){
-        List<ChordLocation> chordDetail = chordDetail(songLine);
-        List<DirectiveLocation> directiveDetail = directiveDetail(songLine);
-        return new RawSongLine(songLine, chordDetail, directiveDetail);
-    }
-    
-    private static List<DirectiveLocation> directiveDetail(String songLine) {
+    private static List<DirectiveLocation> produceDirectiveDetails(String songLine) {
         Pattern pattern = Pattern.compile(CHORD_PRO_DIRECTIVE_REGEX_PATTERN);
         Matcher matcher = pattern.matcher(songLine);
 
@@ -104,11 +98,11 @@ public class Main {
         return  directives;
     }
 
-    private static ArrangedSongLine transformChordSongLines(RawSongLine rawSongLine) {
+    private static ArrangedSongLine transformSongLine(RawSongLine rawSongLine) {
         List<ChordLocation> chordLocations = rawSongLine.getChordLocations();
         String songLine = rawSongLine.getSong(); 
         
-        StringBuilder chordLocBldr = new StringBuilder();
+        StringBuilder chordLocaleBldr = new StringBuilder();
         Integer previousColumnIndex = 0;
         
         for(ChordLocation chordLocation : chordLocations){
@@ -120,16 +114,16 @@ public class Main {
             
             String debracketedChord = debracket(bracketChord);
             
-            chordLocBldr.append(addSpaces(previousColumnIndex, columnIndex)).append(debracketedChord);            
+            chordLocaleBldr.append(addSpaces(previousColumnIndex, columnIndex)).append(debracketedChord);            
             //the new startColumnIndex as been reset to the current columnIndex
             previousColumnIndex = columnIndex + bracketChordLength +1;
         }
         
         songLine = songLine.replaceAll(CHORD_PRO_CHORD_REGEX_PATTERN, "");
-        System.out.println(chordLocBldr.toString());
+        System.out.println(chordLocaleBldr.toString());
         System.out.println(songLine);
         
-        return new ArrangedSongLine(chordLocBldr.toString(), songLine);
+        return new ArrangedSongLine(chordLocaleBldr.toString(), songLine);
     }
     
     private static String debracket(String chord){
