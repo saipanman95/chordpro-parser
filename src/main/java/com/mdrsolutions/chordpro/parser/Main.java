@@ -86,6 +86,7 @@ public class Main {
         List<DirectiveLocation> directives = new LinkedList<>();
 
         int directiveLocation = 0;
+        
         while (matcher.find()) {
             String rawDirective = matcher.group(0);
             directiveLocation = songLine.indexOf(rawDirective, directiveLocation);
