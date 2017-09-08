@@ -1,5 +1,6 @@
 package com.mdrsolutions.chordpro.parser;
 
+import com.mdrsolutions.chordpro.parser.models.DirectiveLocation;
 import com.mdrsolutions.chordpro.parser.enums.DirectiveTypeEnum;
 import com.mdrsolutions.chordpro.parser.enums.MetaTagsDirectiveEnum;
 import com.mdrsolutions.chordpro.parser.enums.Directive;
