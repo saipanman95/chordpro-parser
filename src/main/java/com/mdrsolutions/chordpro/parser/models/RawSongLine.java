@@ -1,4 +1,4 @@
- package com.mdrsolutions.chordpro.parser;
+ package com.mdrsolutions.chordpro.parser.models;
 
 import java.util.List;
 

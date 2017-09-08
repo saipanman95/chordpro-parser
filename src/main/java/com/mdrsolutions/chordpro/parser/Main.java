@@ -1,5 +1,9 @@
 package com.mdrsolutions.chordpro.parser;
 
+import com.mdrsolutions.chordpro.parser.models.DirectiveLocation;
+import com.mdrsolutions.chordpro.parser.models.ArrangedSongLine;
+import com.mdrsolutions.chordpro.parser.models.RawSongLine;
+import com.mdrsolutions.chordpro.parser.models.ChordLocation;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;

@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.mdrsolutions.chordpro.parser;
+package com.mdrsolutions.chordpro.parser.models;
 
 /**
+ * Class is used for displaying each line with either chord or song line
+ * containing formatted directives
  *
  * @author mrodgers
  */
@@ -31,6 +28,5 @@ public class ArrangedSongLine {
     public String toString() {
         return "ArrangedSongLine{" + "chordLine=" + chordLine + ", songLine=" + songLine + '}';
     }
-    
-    
+
 }
