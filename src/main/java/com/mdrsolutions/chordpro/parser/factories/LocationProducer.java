@@ -11,7 +11,7 @@ import java.util.List;
  * @author michaelrodgers
  * @param <LO> Location Object
  */
-public interface ProduceLocations<LO extends Location> {
+public interface LocationProducer<LO extends Location> {
 
-    List<Location> describe(String songLine);
+    List<Location> produce(String songLine);
 }

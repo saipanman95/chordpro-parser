@@ -1,5 +1,8 @@
 package com.mdrsolutions.chordpro.parser;
 
+import com.mdrsolutions.chordpro.parser.factories.ChordLocationProducer;
+import com.mdrsolutions.chordpro.parser.factories.DirectiveLocationProducer;
+import com.mdrsolutions.chordpro.parser.factories.SongLineProducer;
 import com.mdrsolutions.chordpro.parser.models.DirectiveLocation;
 import com.mdrsolutions.chordpro.parser.models.ArrangedSongLine;
 import com.mdrsolutions.chordpro.parser.models.RawSongLine;
@@ -7,8 +10,6 @@ import com.mdrsolutions.chordpro.parser.models.ChordLocation;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -28,7 +29,10 @@ public class Main {
             + "Sing like [C]never be[Em]fore, [C]   [D]O m[Em]y soul.\n"
             + "I'll[C] worship Your ho[D]ly na[C/G]me.   [G]";
    static int num= 0;
+   
     public static void main(String[] args) {
+        
+        SongLineProducer lineProducer = new SongLineProducer(new ChordLocationProducer(), new DirectiveLocationProducer());
         System.out.println("num = " + num);
         System.out.println(SONG);
         List<RawSongLine> songLines = new LinkedList<>();
@@ -36,7 +40,7 @@ public class Main {
         
         //identify song line chord components
         songLines(SONG).forEach((songLine) -> {
-            songLines.add(parseSongLine(songLine));
+            songLines.add(lineProducer.produce(songLine));
         });
 
         //transform Song lines
@@ -57,51 +61,7 @@ public class Main {
         String[] split = song.split("\\n");
         songLines.addAll(Arrays.asList(split));
         return songLines;
-    }
-    
-    private static RawSongLine parseSongLine(String songLine){
-        List<ChordLocation> chordDetail = produceChordDetails(songLine);
-        List<DirectiveLocation> directiveDetail = produceDirectiveDetails(songLine);
-        return new RawSongLine(songLine, chordDetail, directiveDetail);
-    }
-
-    private static List<ChordLocation> produceChordDetails(String songLine) {
-        Pattern pattern = Pattern.compile(CHORD_PRO_CHORD_REGEX_PATTERN);
-        Matcher matcher = pattern.matcher(songLine);
-
-        List<ChordLocation> chords = new LinkedList<>();
-
-        int chordLocation = 0;
-        while (matcher.find()) {
-            String rawChord = matcher.group(0);
-            chordLocation = songLine.indexOf(rawChord, chordLocation);
-            chords.add(new ChordLocation(rawChord, chordLocation));
-            
-            //adding one so it keeps looking forward on next indexOf method
-            chordLocation++;
-        } 
-        return chords;
-    }
-    
-    private static List<DirectiveLocation> produceDirectiveDetails(String songLine) {
-        Pattern pattern = Pattern.compile(CHORD_PRO_DIRECTIVE_REGEX_PATTERN);
-        Matcher matcher = pattern.matcher(songLine);
-
-        List<DirectiveLocation> directives = new LinkedList<>();
-
-        int directiveLocation = 0;
-        
-        while (matcher.find()) {
-            String rawDirective = matcher.group(0);
-            directiveLocation = songLine.indexOf(rawDirective, directiveLocation);
-            directives.add(new DirectiveLocation(rawDirective, directiveLocation));
-            
-            //adding one so it keeps looking forward on next indexOf method
-            directiveLocation++;
-        }
-
-        return  directives;
-    }
+    } 
 
     private static ArrangedSongLine transformSongLine(RawSongLine rawSongLine) {
         List<ChordLocation> chordLocations = rawSongLine.getChordLocations();
