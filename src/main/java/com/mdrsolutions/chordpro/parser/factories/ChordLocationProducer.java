@@ -7,7 +7,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * 
+ * @author mrodgers
+ * @param <LO> 
+ */
 public class ChordLocationProducer<LO extends ChordLocation> implements LocationProducer<LO> {
 
     private static final String CHORD_PRO_CHORD_REGEX_PATTERN = "\\[(.*?)\\]";

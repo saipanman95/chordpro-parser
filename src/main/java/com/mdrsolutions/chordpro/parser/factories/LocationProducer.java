@@ -11,7 +11,8 @@ import java.util.List;
  * @author michaelrodgers
  * @param <LO> Location Object
  */
-public interface LocationProducer<LO extends Location> {
+public interface LocationProducer<LO extends Location> extends Producer<List<Location>, String> {
 
+    @Override
     List<Location> produce(String songLine);
 }

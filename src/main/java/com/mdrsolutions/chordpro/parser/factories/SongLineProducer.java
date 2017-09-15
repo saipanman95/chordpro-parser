@@ -9,7 +9,8 @@ import java.util.List;
  *
  * @author mrodgers
  */
-public class SongLineProducer {
+public class SongLineProducer implements Producer<RawSongLine, String> {
+    
     
     private final ChordLocationProducer chordLocations;
     private final DirectiveLocationProducer directiveLocations;
@@ -19,6 +20,7 @@ public class SongLineProducer {
         this.directiveLocations = directiveLocations;
     }
     
+    @Override
     public RawSongLine produce(String songLine){
         
         List<ChordLocation> chordDetail = chordLocations.produce(songLine);   
@@ -26,4 +28,5 @@ public class SongLineProducer {
         
         return new RawSongLine(songLine, chordDetail, directiveDetail);
     }
+ 
 }
