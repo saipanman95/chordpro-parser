@@ -6,9 +6,9 @@ package com.mdrsolutions.chordpro.parser.models;
  *
  * @author mrodgers
  */
-public class ArrangedSongLine {
+public class SimpleTextSongLine {
 
-    public ArrangedSongLine(String chordLine, String songLine) {
+    public SimpleTextSongLine(String chordLine, String songLine) {
         this.chordLine = chordLine;
         this.songLine = songLine;
     }
