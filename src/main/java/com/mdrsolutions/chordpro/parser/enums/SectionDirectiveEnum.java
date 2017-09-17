@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mdrsolutions.chordpro.parser.enums;
+
+import java.util.Map;
 
 /**
  *
@@ -40,6 +37,11 @@ public enum SectionDirectiveEnum implements Directive{
     @Override
     public DirectiveTypeEnum getType(){
         return DirectiveTypeEnum.SECTION;
+    } 
+
+    @Override
+    public Map<String, String> directiveWrapper(String start, String end) {
+        return wrapper(start, end);
     }
 
 }
