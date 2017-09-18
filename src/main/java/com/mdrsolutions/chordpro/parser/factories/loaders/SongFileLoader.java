@@ -1,5 +1,6 @@
-package com.mdrsolutions.chordpro.parser.factories;
+package com.mdrsolutions.chordpro.parser.factories.loaders;
 
+import com.mdrsolutions.chordpro.parser.factories.producers.SongLineProducer;
 import com.mdrsolutions.chordpro.parser.models.RawSongLine;
 import java.io.BufferedReader;
 import java.io.FileReader;

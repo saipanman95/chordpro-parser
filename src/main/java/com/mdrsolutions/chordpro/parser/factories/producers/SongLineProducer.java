@@ -1,4 +1,4 @@
-package com.mdrsolutions.chordpro.parser.factories;
+package com.mdrsolutions.chordpro.parser.factories.producers;
 
 import com.mdrsolutions.chordpro.parser.models.ChordLocation;
 import com.mdrsolutions.chordpro.parser.models.DirectiveLocation;

@@ -1,4 +1,4 @@
-package com.mdrsolutions.chordpro.parser.factories;
+package com.mdrsolutions.chordpro.parser.factories.loaders;
 
 /**
  * Interface is designed to loosely describe the specification for how songs are

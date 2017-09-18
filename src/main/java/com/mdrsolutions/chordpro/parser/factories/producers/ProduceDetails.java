@@ -1,4 +1,4 @@
-package com.mdrsolutions.chordpro.parser.factories;
+package com.mdrsolutions.chordpro.parser.factories.producers;
 
 import com.mdrsolutions.chordpro.parser.models.Details;
 import java.util.List;

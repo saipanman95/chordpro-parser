@@ -1,11 +1,11 @@
 package com.mdrsolutions.chordpro.parser;
 
-import com.mdrsolutions.chordpro.parser.factories.ChordLocationProducer;
-import com.mdrsolutions.chordpro.parser.factories.DirectiveLocationProducer;
-import com.mdrsolutions.chordpro.parser.factories.Loader;
-import com.mdrsolutions.chordpro.parser.factories.SimpleTextLineProducer;
-import com.mdrsolutions.chordpro.parser.factories.SongFileLoader;
-import com.mdrsolutions.chordpro.parser.factories.SongLineProducer;
+import com.mdrsolutions.chordpro.parser.factories.producers.ChordLocationProducer;
+import com.mdrsolutions.chordpro.parser.factories.producers.DirectiveLocationProducer;
+import com.mdrsolutions.chordpro.parser.factories.loaders.Loader;
+import com.mdrsolutions.chordpro.parser.factories.producers.SimpleTextLineProducer;
+import com.mdrsolutions.chordpro.parser.factories.loaders.SongFileLoader;
+import com.mdrsolutions.chordpro.parser.factories.producers.SongLineProducer;
 import com.mdrsolutions.chordpro.parser.models.SimpleTextSongLine;
 import com.mdrsolutions.chordpro.parser.models.RawSongLine;
 import java.util.Arrays;
