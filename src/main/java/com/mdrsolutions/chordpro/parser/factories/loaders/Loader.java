@@ -1,5 +1,7 @@
 package com.mdrsolutions.chordpro.parser.factories.loaders;
 
+import java.util.Collection;
+
 /**
  * Interface is designed to loosely describe the specification for how songs are
  * loaded (SR), Produced(P), and Presented(SC). The Song Loading (SR) could be
@@ -9,10 +11,8 @@ package com.mdrsolutions.chordpro.parser.factories.loaders;
  *
  * @author mrodgers
  * @param <SC> Song Line Collection
- * @param <SR> Song File, String, or some retrieving mechanism
- * @param <P> Song Line Producer
  */
-public interface Loader<SC, SR, P> {
+public interface Loader<SC> {
 
-    SC load(SR song);
+    Collection<SC> load();
 }

@@ -1,28 +1,30 @@
 package com.mdrsolutions.chordpro.parser.factories.loaders;
 
-import com.mdrsolutions.chordpro.parser.factories.producers.SongLineProducer;
-import com.mdrsolutions.chordpro.parser.models.RawSongLine;
+import com.mdrsolutions.chordpro.parser.factories.producers.Producer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SongFileLoader implements Loader<List<RawSongLine>, String, SongLineProducer> {
+public class SongFileLoader implements Loader {
 
-    private final SongLineProducer lineProducer;
-
-    public SongFileLoader(SongLineProducer lineProducer) {
+    private final String songPath;
+    private final Producer lineProducer;
+    
+    public SongFileLoader(String songPath, Producer lineProducer) {
+        this.songPath = songPath;
         this.lineProducer = lineProducer;
     }
 
     @Override
-    public List<RawSongLine> load(String songPath) {
-        List<RawSongLine> rawSongLines = new LinkedList<>();
+    public Collection load() {
+        List rawSongLines = new LinkedList<>();
 
-        for (String songLine : readFile(songPath)) {
+        readFile(songPath).forEach((songLine) -> {
             rawSongLines.add(lineProducer.produce(songLine));
-        }
+        });
         return rawSongLines;
     }
 
