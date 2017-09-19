@@ -9,6 +9,8 @@ import com.mdrsolutions.chordpro.parser.factories.processor.Processor;
 import com.mdrsolutions.chordpro.parser.factories.processor.SongProcessor;
 import com.mdrsolutions.chordpro.parser.factories.producers.Producer;
 import com.mdrsolutions.chordpro.parser.factories.producers.SongLineProducer;
+import com.mdrsolutions.chordpro.parser.factories.viewer.Presenter;
+import com.mdrsolutions.chordpro.parser.factories.viewer.SystemOutPresenter;
 import com.mdrsolutions.chordpro.parser.models.SimpleTextSongLine;
 import com.mdrsolutions.chordpro.parser.models.RawSongLine;
 import java.util.Collection;
@@ -38,11 +40,9 @@ public class Main {
 
         Processor<List<RawSongLine>, SimpleTextSongLine, RawSongLine> songProcessor = new SongProcessor();
 
-        Collection<SimpleTextSongLine> song = songProcessor.process(loader, simpleTextLineProducer);
+        Collection<SimpleTextSongLine> simpleTextSongLines = songProcessor.process(loader, simpleTextLineProducer);
 
-        for(SimpleTextSongLine tsl : song){
-            System.out.println(tsl);
-        }
+        String finalCompiledSong = new SystemOutPresenter<String>(simpleTextSongLines).present();
     }
 
 }
