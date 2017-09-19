@@ -11,20 +11,24 @@ import java.util.List;
  */
 public class SongLineProducer implements Producer<RawSongLine, String> {
     
-    
-    private final ChordLocationProducer chordLocations;
-    private final DirectiveLocationProducer directiveLocations;
+    private final LocationProducer chordProducerLocations;
+    private final LocationProducer directiveProducerLocations;
 
-    public SongLineProducer(ChordLocationProducer chordLocations, DirectiveLocationProducer directiveLocations) {
-        this.chordLocations = chordLocations;
-        this.directiveLocations = directiveLocations;
+    /**
+     * 
+     * @param chordProducerLocations
+     * @param directiveProducerLocations 
+     */
+    public SongLineProducer(LocationProducer chordProducerLocations, LocationProducer directiveProducerLocations) {
+        this.chordProducerLocations = chordProducerLocations;
+        this.directiveProducerLocations = directiveProducerLocations;
     }
     
     @Override
     public RawSongLine produce(String songLine){
         
-        List<ChordLocation> chordDetail = chordLocations.produce(songLine);   
-        List<DirectiveLocation> directiveDetail = directiveLocations.produce(songLine);
+        List<ChordLocation> chordDetail = chordProducerLocations.produce(songLine);   
+        List<DirectiveLocation> directiveDetail = directiveProducerLocations.produce(songLine);
         
         return new RawSongLine(songLine, chordDetail, directiveDetail);
     }
