@@ -8,6 +8,7 @@ import com.mdrsolutions.chordpro.parser.factories.loaders.SongFileLoader;
 import com.mdrsolutions.chordpro.parser.factories.processor.Processor;
 import com.mdrsolutions.chordpro.parser.factories.processor.SongProcessor;
 import com.mdrsolutions.chordpro.parser.factories.producers.Producer;
+import com.mdrsolutions.chordpro.parser.factories.producers.SimpleTextMetaTagDirectiveBuilder;
 import com.mdrsolutions.chordpro.parser.factories.producers.SongLineProducer;
 import com.mdrsolutions.chordpro.parser.factories.viewer.SystemOutPresenter;
 import com.mdrsolutions.chordpro.parser.models.SimpleTextSongLine;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class Main {
 
-    private static final String PATH = "/Users/mrodgers/songfiles/testsong.chordpro";
+    private static final String PATH = "//Users/michaelrodgers/Dropbox/SongBook/Forever.pro";
     private static final String SONG
             = "{c: Verse 1: }\n"
             + "{soi}(das){eoi} Bless the[C] Lord, O my[G] {soh}(now dance){eoh}soul,[D/F#] O my [Em] soul,\n"
@@ -35,7 +36,7 @@ public class Main {
 
         Loader<List<RawSongLine>> loader = new SongFileLoader(PATH, rawSongLineProducer);
 
-        Producer<SimpleTextSongLine, RawSongLine> simpleTextLineProducer = new SimpleTextLineProducer();
+        Producer<SimpleTextSongLine, RawSongLine> simpleTextLineProducer = new SimpleTextLineProducer(new SimpleTextMetaTagDirectiveBuilder());
 
         Processor<List<RawSongLine>, SimpleTextSongLine, RawSongLine> songProcessor = new SongProcessor();
 
