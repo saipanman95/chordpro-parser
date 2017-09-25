@@ -3,6 +3,9 @@ package com.mdrsolutions.chordpro.parser.enums;
 import java.util.Map;
 
 /**
+ * Enum of all meta tags directives that follow a patter of {tag: text }. Each
+ * enum contains the normative tag name and a possible abbreviation. If no
+ * abbreviation is found use the normative tag name for parsing.
  *
  * @author mrodgers
  */
@@ -15,6 +18,7 @@ public enum MetaTagsDirectiveEnum implements Directive {
     author(),
     key("key", "k"),
     capo(),
+    ipodid("ipodid", "ip"),
     comment("comment", "c"),
     guitarComment("guitar_comment", "gc"),
     commentBold("comment_bold", "cb"),
@@ -58,9 +62,9 @@ public enum MetaTagsDirectiveEnum implements Directive {
     public String getNorm() {
         return norm;
     }
-    
+
     @Override
-    public DirectiveTypeEnum getType(){
+    public DirectiveTypeEnum getType() {
         return DirectiveTypeEnum.META_TAG;
     }
 
