@@ -23,6 +23,9 @@ repositories {
 
 dependencies {
     // TODO: Add dependencies here ...
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+
     // You can read more about how to add dependency here:
     //   http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:how_to_declare_your_dependencies
     testCompile group: 'junit', name: 'junit', version: '4.10'
