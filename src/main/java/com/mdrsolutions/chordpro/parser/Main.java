@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class Main {
 
-    private static final String PATH = "//Users/michaelrodgers/Dropbox/SongBook/Forever.pro";
+    private static final String PATH = "//Users/mrodgers/Downloads/CameToMyRescue.pro";
     private static final String SONG
             = "{c: Verse 1: }\n"
             + "{soi}(das){eoi} Bless the[C] Lord, O my[G] {soh}(now dance){eoh}soul,[D/F#] O my [Em] soul,\n"
@@ -43,6 +43,9 @@ public class Main {
         Collection<SimpleTextSongLine> simpleTextSongLines = songProcessor.process(loader, simpleTextLineProducer);
 
         String finalCompiledSong = new SystemOutPresenter<String>(simpleTextSongLines).present();
+        
+        SimpleTextSongParser parser = new SimpleTextSongParser();
+        System.out.println("Utilizing SimpleSongTextParser class to parse file from given path \n\n" + parser.parse(PATH));
     }
 
 }
