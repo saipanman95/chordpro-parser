@@ -23,6 +23,9 @@ public class SimpleTextMetaTagDirectiveBuilder {
     private static final String META_TAGS_DIRECT_REGEX_PATTERN = "\\{.*:(.*?)\\}";
     private static final String SECTIONAL_DIRECT_REGEX_PATTERN = "\\{(.*?)\\}.*?\\{(.*?)\\}";
 
+    private static final int META_TAG = 1;
+    private static final int SECTIONAL_TAG = 2;
+    
     public String build(String songLine) {
         MetaTagsDirectiveEnum[] values = MetaTagsDirectiveEnum.values();
 
@@ -34,7 +37,7 @@ public class SimpleTextMetaTagDirectiveBuilder {
                 songLine = lineMatchedObject.getSongLine();
             }
         }
-        return eliminateRemainingDirectives(songLine);
+        return eliminateRemainingDirectives(songLine, SECTIONAL_TAG);
     }
 
     private SongLineMatchedObject songLinePatterMatcherTransformer(String songLine, Directive d) {
@@ -49,13 +52,14 @@ public class SimpleTextMetaTagDirectiveBuilder {
         SongLineMatchedObject songLineMatchedObject = new SongLineMatchedObject(Boolean.FALSE, songLine);
         while (matcher.find()) {
 
-            String original = matcher.group(0);
-            String without = matcher.group(1);
-
-            if (songLine.contains(abbr)) {
+            String original = matcher.group(0); 
+            String without;
+            
+            if (songLine.contains(abbr)) { 
+                without = original.replace(abbr, "").replace("}", ""); 
                 modifiedSongLine = modifiedSongLine.replace(original, without.toUpperCase().trim());
-
             } else if (songLine.contains(norm)) {
+                without = original.replace(norm, "").replace("}", ""); 
                 modifiedSongLine = modifiedSongLine.replace(original, without.toUpperCase().trim());
             }
 
@@ -64,8 +68,9 @@ public class SimpleTextMetaTagDirectiveBuilder {
         return songLineMatchedObject;
     }
 
-    private String eliminateRemainingDirectives(String songLine) {
-        Pattern pattern = Pattern.compile(SECTIONAL_DIRECT_REGEX_PATTERN);
+    private String eliminateRemainingDirectives(String songLine, int MetaTagOrSectionalTag) {
+        
+        Pattern pattern = Pattern.compile((MetaTagOrSectionalTag == SECTIONAL_TAG) ? SECTIONAL_DIRECT_REGEX_PATTERN : META_TAGS_DIRECT_REGEX_PATTERN);
         Matcher matcher = pattern.matcher(songLine);
 
         while (matcher.find()) {
