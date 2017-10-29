@@ -12,7 +12,7 @@ import java.util.Map;
 public enum MetaTagsDirectiveEnum implements Directive {
 
     title("title", "t"),
-    subtitle("subtitle", "su"),
+    subtitle("subtitle", "st"),
     album(),
     artist("artist", "a"),
     author(),
