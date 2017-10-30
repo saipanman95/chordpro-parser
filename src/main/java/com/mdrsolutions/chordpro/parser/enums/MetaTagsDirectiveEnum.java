@@ -11,15 +11,15 @@ import java.util.Map;
  */
 public enum MetaTagsDirectiveEnum implements Directive {
 
-    title("title", "t"),
-    subtitle("subtitle", "st"),
+    title("title", "t", HtmlWrapper.h1),
+    subtitle("subtitle", "st", HtmlWrapper.h3),
     album(),
-    artist("artist", "a"),
+    artist("artist", "a", HtmlWrapper.h4),
     author(),
-    key("key", "k"),
+    key("key", "k", HtmlWrapper.h4),
     capo(),
     ipodid("ipodid", "ip"),
-    comment("comment", "c"),
+    comment("comment", "c", HtmlWrapper.div),
     guitarComment("guitar_comment", "gc"),
     commentBold("comment_bold", "cb"),
     commentItalic("comment_italic", "ci"),
@@ -43,15 +43,24 @@ public enum MetaTagsDirectiveEnum implements Directive {
     MetaTagsDirectiveEnum() {
         this.norm = name();
         this.abbr = name();
+        this.htmlWrapper = HtmlWrapper.div;
     }
 
     MetaTagsDirectiveEnum(String norm, String abbr) {
         this.norm = norm;
         this.abbr = abbr;
+        this.htmlWrapper = HtmlWrapper.div;
+    }
+    
+    MetaTagsDirectiveEnum(String norm, String abbr, HtmlWrapper hw) {
+        this.norm = norm;
+        this.abbr = abbr;
+        this.htmlWrapper = hw;
     }
 
     private final String norm;
     private final String abbr;
+    private final HtmlWrapper htmlWrapper;
 
     @Override
     public String getAbbr() {
@@ -71,6 +80,11 @@ public enum MetaTagsDirectiveEnum implements Directive {
     @Override
     public Map<String, String> directiveWrapper(String start, String end) {
         return wrapper(start, end);
+    }
+    
+    @Override
+    public HtmlWrapper getHtml(){
+        return this.htmlWrapper;
     }
 
 }

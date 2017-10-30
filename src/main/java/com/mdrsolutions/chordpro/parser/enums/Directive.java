@@ -12,11 +12,11 @@ public interface Directive {
     public static final String ABBR = "abbr";
     public static final String NORM = "norm";
     
-    
-    
     String getAbbr();
 
     String getNorm();
+    
+    HtmlWrapper getHtml();
     
     Map<String,String> directiveWrapper(String start, String end);
     

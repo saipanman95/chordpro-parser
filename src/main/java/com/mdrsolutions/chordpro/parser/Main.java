@@ -15,7 +15,7 @@ public class Main {
             + "I'll[C] worship Your ho[D]ly na[C/G]me.   [G]";
 
     public static void main(String[] args) {
-        SimpleTextSongParser parser = new SimpleTextSongParser();
+        HtmlSongParser parser = new HtmlSongParser();
 //        System.out.println(parser.parse(SONG, true));
         System.out.println("----");
         System.out.println("Utilizing SimpleSongTextParser class to parse file from given path \n\n" + parser.parse(PATH));
