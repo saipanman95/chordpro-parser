@@ -44,7 +44,7 @@ public class HtmlMetaTagDirectiveBuilder {
 
     private void loadProperties() {
         try {
-            prop.load(new FileInputStream("styles.properties"));
+            prop.load(new FileInputStream("\"src/main/resources/styles.properties\""));
         } catch (FileNotFoundException ex) {
             System.out.println("loadProperties() - logging stuff = " + ex.getLocalizedMessage());
         } catch (IOException ex) {
@@ -100,7 +100,7 @@ public class HtmlMetaTagDirectiveBuilder {
         String styleProperty = prop.getProperty(d.getNorm());
         
         if(null !=styleProperty){
-            attributes.add(new HtmlAttribute("style", transform(styleProperty)));
+            attributes.add(new HtmlAttribute("style=", transform(styleProperty)));
         }
         
         if(d.getType().equals(DirectiveTypeEnum.META_TAG)){

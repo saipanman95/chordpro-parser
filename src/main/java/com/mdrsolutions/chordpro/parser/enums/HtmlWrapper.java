@@ -31,7 +31,8 @@ public enum HtmlWrapper {
     tr("<tr #>","</tr>"),
     td("<td #>","</td>"),
     tbody("<tbody #>","</tbody>"),
-    pre("<pre>","</pre>");
+    pre("<pre>","</pre>"),
+    style("<style>","</style>");
     
     private final String start;
     private final String end;

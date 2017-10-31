@@ -30,7 +30,7 @@ private final Properties prop = new Properties();
 
     private void loadProperties() {
         try {
-            prop.load(new FileInputStream("styles.properties"));
+            prop.load(new FileInputStream("src/main/resources/styles.properties"));
         } catch (FileNotFoundException ex) {
             System.out.println("loadProperties() - logging stuff = " + ex.getLocalizedMessage());
         } catch (IOException ex) {
@@ -78,7 +78,7 @@ private final Properties prop = new Properties();
         Set<HtmlAttribute> attributes = new HashSet<>(); 
         
         if(null !=chordStyle){
-            attributes.add(new HtmlAttribute("style", transform(chordStyle)));
+            attributes.add(new HtmlAttribute("style=", transform(chordStyle)));
         }
         
         return HtmlWrapper.wrap(
